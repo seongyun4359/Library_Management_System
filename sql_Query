@@ -1,0 +1,131 @@
+drop database if exists librarydb;
+create database librarydb;
+USE LIBRARYDB;
+
+
+CREATE TABLE userTBL (
+    memberID INT PRIMARY KEY AUTO_INCREMENT, 					-- 회원고유번호
+    name VARCHAR(100) NOT NULL,									-- 회원이름
+    memberGrade ENUM('일반', '연체', '퇴출', '관리자') NOT NULL,		-- 회원등급(일반,관리,퇴출자)
+    ID VARCHAR(50) UNIQUE NOT NULL,								-- 로그인 ID
+    PW VARCHAR(255) NOT NULL,									-- 로그인 비밀번호
+    phone VARCHAR(15),											-- 전화번호
+    overdueCount INT DEFAULT 0,									-- 연체횟수
+    currentRentalCount INT DEFAULT 0							-- 현재 대여중인 도서 수
+);
+
+CREATE TABLE BookTbl (
+    bookID INT PRIMARY KEY AUTO_INCREMENT, 						 -- 도서 고유 번호, 자동 증가
+    bookName VARCHAR(255) NOT NULL,         					 -- 도서명 (티니핑 이름)
+    author VARCHAR(100) NOT NULL,            					 -- 저자
+    publisher VARCHAR(100) NOT NULL,         					 -- 출판사
+    category VARCHAR(50) NOT NULL,           					 -- 도서 카테고리
+    quantity INT DEFAULT 1                  					 -- 도서 수량, 기본값 1
+);
+CREATE TABLE RentalTbl (
+    rentalID INT AUTO_INCREMENT PRIMARY KEY,  -- 대여 기록 고유 번호
+    memberID INT,  -- 회원 ID (UserTbl의 외래 키)
+    bookID INT,  -- 도서 ID (BookTbl의 외래 키)
+    rentalDate DATE NOT NULL,  -- 대여 날짜
+    dueDate DATE NOT NULL,  -- 반납 기한
+    returnDate DATE DEFAULT NULL,  -- 실제 반납 날짜
+    overdue BOOLEAN DEFAULT FALSE,  -- 연체 여부
+    extended BOOLEAN DEFAULT FALSE,  -- 대여 연장 여부
+    quantity INT DEFAULT 1,  -- 대여된 도서 수량
+    FOREIGN KEY (memberID) REFERENCES UserTbl(memberID),
+    FOREIGN KEY (bookID) REFERENCES BookTbl(bookID)
+);
+
+SELECT * FROM librarydb.booktbl;
+						-- 고유 번호 /   도서명	 /   저자  /	  출판사	 / 카테고리 /수량/대여일/ 대여 /   고유번호
+                        
+-- 시즌 1 파트 1 티니핑
+insert into booktbl (bookName, author, publisher, category, quantity) values ('키키핑 자서전', '마루 마루', '키즈북', '일반', 3);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('아잉핑 자서전', '호호 하하', '스마일출판사', '일반', 2);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('부끄핑 자서전', '솔로몬 키', '햇살책방', '일반', 5);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('부투핑 자서전', '레이첼 리', '동화마을', '일반', 4);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('깜빡핑 자서전', '스티븐 블루', '별하늘출판', '일반', 1);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('띠용핑 자서전', '엘리 콩', '두루출판사', '일반', 7);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('주르핑 자서전', '미카엘 토스', '하나출판', '일반', 3);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('차나핑 자서전', '사무엘 베켓', '책마루', '일반', 6);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('따라핑 자서전', '루이스 캐럴', '어린이북스', '일반', 2);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('나르핑 자서전', '메리 쉘리', '환상문학사', '일반', 5);
+
+-- 시즌 2 보석 티니핑
+insert into booktbl (bookName, author, publisher, category, quantity) values ('까르핑 자서전', '조지 오웰', '글램북', '보석', 8);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('아야핑 자서전', '버지니아 울프', '파라다이스북', '보석', 4);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('소원핑 자서전', '아멜리아 클레어', '보석빛출판', '보석', 9);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('토닥핑 자서전', '헨리 클라우드', '동화세상', '보석', 6);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('쪼꼼핑 자서전', '벤자민 라이트', '호박출판사', '보석', 3);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('싹싹핑 자서전', '리베카 화이트', '하얀달출판', '보석', 7);
+
+-- 시즌 3 열쇠 티니핑
+insert into booktbl (bookName, author, publisher, category, quantity) values ('빨리핑 자서전', '아이작 아시모프', '열쇠북', '열쇠', 5);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('얌얌핑 자서전', '닐 게이먼', '파인출판사', '열쇠', 3);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('뜨거핑 자서전', 'C.S. 루이스', '해리출판', '열쇠', 6);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('삐뽀핑 자서전', '아서 밀러', '마인드북스', '열쇠', 4);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('간호핑 자서전', '테리 프래쳇', '아침책방', '열쇠', 8);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('힘내핑 자서전', '제임스 조이스', '지혜출판', '열쇠', 9);
+
+-- 시즌 4 디저트 티니핑
+insert into booktbl (bookName, author, publisher, category, quantity) values ('캔디핑 자서전', '클라크 트위셀', '달콤북스', '디저트', 4);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('머랭핑 자서전', '존 그린', '디저트북', '디저트', 7);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('샌드핑 자서전', '샬롯 브론테', '노란달출판', '디저트', 5);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('또너핑 자서전', '마거릿 애트우드', '핑크출판사', '디저트', 3);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('와플핑 자서전', '주디 블룸', '디저트세상', '디저트', 9);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('롤리핑 자서전', '리처드 아담스', '아이스출판', '디저트', 6);
+
+-- 시즌 5 스타티니핑
+insert into booktbl (bookName, author, publisher, category, quantity) values ('나눔핑 자서전', '마크 트웨인', '스타라이트북', '스타', 8);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('뽀뽀핑 자서전', '루이자 메이 올컷', '햇빛출판사', '스타', 4);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('루루핑 자서전', '랠프 엘리슨', '별자리출판', '스타', 2);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('댄스핑 자서전', 'F. 스콧 피츠제럴드', '브라이트북', '스타', 3);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('유리핑 자서전', '윌리엄 골딩', '스타북스', '스타', 7);
+insert into booktbl (bookName, author, publisher, category, quantity) values ('몰래핑 자서전', '존 스타인벡', '스텔라북', '스타', 5);
+
+-- TRUNCATE TABLE booktbl;
+
+SELECT * FROM librarydb.usertbl;
+INSERT INTO UserTbl (name, memberGrade, ID, PW, phone)
+VALUES 
+('홍길동', '일반', 'user001', 'password1', '010-1234-5678'),
+('이디비', '퇴출', 'user002', 'password2', '010-2345-6789'),
+('김자바', '관리자', 'admin001', 'password3', '010-3456-7890');
+
+
+
+
+
+drop trigger if exists bookQntTrg;
+delimiter //
+create trigger bookQnttrg
+before update on booktbl
+for each row
+begin
+if old.quantity = 0 and new.quantity = -1 then
+signal sqlstate '45000'
+set message_text = '도서의 수량이 0이므로 대여할 수 없습니다';
+end if;
+end //
+delimiter ;
+
+drop trigger if exists rentalTrg;
+delimiter //
+create trigger rentalTrg
+after insert on rentaltbl
+for each row 
+begin
+update usertbl set currentrentalcount = currentrentalcount + 1 where memberid = new.memberid;
+end //
+delimiter ;
+
+drop trigger if exists returnTrg;
+delimiter //
+create trigger returnTrg
+after update on rentaltbl
+for each row
+begin
+update usertbl set currentrentalcount = currentrentalcount - 1 where memberID = new.memberID;
+end //
+delimiter ;
+

@@ -1,0 +1,41 @@
+[33mcommit 38fcc9ac7c4f32900af900bf053f344a333b529b[m
+Author: dijeungi <dijeungi@naver.com>
+Date:   Wed Oct 2 10:14:33 2024 +0900
+
+    Delete .classpath
+
+[33mcommit 9f78b9d41da6a0d6a69d08c279d3a7a20a32fb81[m
+Author: SeongYun_Cheon <1112csy@naver.com>
+Date:   Wed Oct 2 09:56:31 2024 +0900
+
+    디비 관리자 권한 디비 쿼리문 수정
+
+[33mcommit 2433425679e2727b07ff102c05ab9678a9868cd1[m
+Author: RyuJaeyoung <rjykab@gmail.com>
+Date:   Mon Sep 30 20:50:55 2024 +0900
+
+    도서대여 기능 수정
+
+[33mcommit b4b9c62dcebdafd892afb6afce73e9f362524021[m
+Author: dijeung <dijeungi@naver.com>
+Date:   Mon Sep 30 18:00:39 2024 +0900
+
+    도서 대여기능 추가
+
+[33mcommit dd1d3fa1046b62305063d27e41aaa8326880f244[m
+Author: RyuJaeyoung <rjykab@gmail.com>
+Date:   Mon Sep 30 16:23:40 2024 +0900
+
+    회원가입 로직 수정
+
+[33mcommit c17767aa493fb3b68bd38e5d6877bfbf39135707[m
+Author: SeongYun_Cheon <1112csy@naver.com>
+Date:   Mon Sep 30 10:44:46 2024 +0900
+
+    출력문 꾸미기
+
+[33mcommit 7cc0c554cf684db09e42057d8ea00e29b89fcdd9[m
+Author: SeongYun_Cheon <1112csy@naver.com>
+Date:   Fri Sep 27 13:02:54 2024 +0900
+
+    자바 대도서관 관리 프로그램 초기 틀 구성
